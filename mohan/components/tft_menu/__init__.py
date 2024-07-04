@@ -91,15 +91,19 @@ async def tft_menu_keypress_to_code(config, action_id, template_arg, args):
 
 
 def to_code(config):
-    std_string = str(cg.std_vector.template(cg.TemplateArguments(cg.std_string)))
+    menu = list(config[CONF_MENU])
+    main_menu = [item['name'] for item in menu]
+    menu_options = [item['options'] for item in menu]
 
+    array = str(cg.ArrayInitializer(*main_menu,multiline=True))
+    vec_string = str(cg.std_vector.template(cg.TemplateArguments(cg.std_string)))
+    expr = cg.RawExpression(f"{vec_string} menu = {array}")
+    statement = str(cg.statement(expr))
 
     var = cg.new_Pvariable(config[CONF_ID])
     yield cg.register_component(var, config)
 
-    menu = list(config[CONF_MENU])
-    main_menu = [item['name'] for item in menu]
-    menu_options = [item['options'] for item in menu]
+
 
    
     
