@@ -1,0 +1,25 @@
+esphome:
+  name: oled
+esp32:
+  board: esp32-c3-devkitm-1
+external_components:
+  - source:
+      type: local
+      path: components      
+wifi:
+  ssid: Wokwi-GUEST
+web_server:
+logger:
+oled:
+  - sda: 8
+    scl: 9
+    id: oled_1
+    index: 1
+  - sda: 7
+    scl: 6
+    address: 0x3D
+    id: oled_2
+    index: 2
+
+
+
