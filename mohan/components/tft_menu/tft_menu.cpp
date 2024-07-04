@@ -21,5 +21,13 @@ void TFTMenuComponent::key_pressed(int key) {
   ESP_LOGI("tft_menu", "key pressed from component: %d", key);
 }
 
+void TFTMenuComponent::set_top_menu(std::vector<std::string> && top_menu) {
+  this->top_menu_ = std::move(top_menu);
+}
+
+void TFTMenuComponent::set_menu_options(std::vector<std::vector<std::string>> && menu_options) {
+  this->menu_options_ = std::move(menu_options);
+}
+
 }
 }

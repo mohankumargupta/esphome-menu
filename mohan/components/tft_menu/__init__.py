@@ -91,11 +91,20 @@ async def tft_menu_keypress_to_code(config, action_id, template_arg, args):
 
 
 def to_code(config):
+    std_string = str(cg.std_vector.template(cg.TemplateArguments(cg.std_string)))
+
+
+    var = cg.new_Pvariable(config[CONF_ID])
+    yield cg.register_component(var, config)
+
     menu = list(config[CONF_MENU])
     main_menu = [item['name'] for item in menu]
     menu_options = [item['options'] for item in menu]
-    var = cg.new_Pvariable(config[CONF_ID])
-    yield cg.register_component(var, config)
+
+   
+    
+    #top_menu_cg = cg.new_variable("menu", "null", ct.std_vector.template(cg.std_string))
+    #cg.add(cg.(ct.std_vector.template(cg.std_string), "", "top_menu", r"{}"))
 
     # cg.add_build_flag("-DU8X8_NO_HW_SPI")
     # cg.add_build_flag("-DU8X8_NO_HW_I2C")
