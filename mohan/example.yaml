@@ -90,6 +90,12 @@ binary_sensor:
         - logger.log:  "button 9 was pressed."
         - tft_menu.keypress:
             key: 9
+        - lambda: |-
+            std::vector<std::string> menu = id(mymenu)->get_menu();
+            for (const auto &i: menu) {
+              ESP_LOGI("fromlambda", i.c_str());
+            }
+            
   - platform: matrix_keypad
     keypad_id: mykeypad
     id: keystar

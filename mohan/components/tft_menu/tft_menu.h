@@ -17,6 +17,9 @@ class TFTMenuComponent : public Component {
   void key_pressed(int key);
   void set_top_menu(std::vector<std::string> && top_menu);
   void set_menu_options(std::vector<std::vector<std::string>> && menu_options);
+  const std::vector<std::string>& get_menu() const {
+    return top_menu_;
+  } 
 
  private:
   uint8_t index;
