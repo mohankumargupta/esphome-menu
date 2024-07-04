@@ -1,0 +1,58 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Only Generate C++ files",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "esphome",
+            "args": ["compile", "--only-generate","mohan/example.yaml"],
+            "env": {
+                "ESPHOME_DATA_DIR": "mohan/build"
+            },
+            "stopOnEntry": false
+        },
+        {
+            "name": "Build",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "esphome",
+            "args": ["compile", "mohan/example.yaml"],
+            "env": {
+                "ESPHOME_DATA_DIR": "mohan/build"
+            },
+            "stopOnEntry": false
+        },
+        {
+            "name": "Run on wokwi",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "esphome",
+            "args": ["compile", "--only-generate","mohan/example.yaml"],
+            "env": {
+                "ESPHOME_DATA_DIR": "mohan/build"
+            },
+            "stopOnEntry": false
+        }, 
+        {
+            
+            "name": "Wokwi GDB",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/mohan/build/build/oled/.pioenvs/oled/firmware.elf",
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            //"miDebuggerPath": "${env:UserProfile}/.platformio/packages/toolchain-riscv32-esp/bin/riscv32-esp-elf-gdb.exe",
+            "miDebuggerPath": "${env:UserProfile}/.platformio/packages/toolchain-xtensa-esp32s3/bin/xtensa-esp32s3-elf-gdb.exe",
+            "miDebuggerServerAddress": "localhost:3333",
+            //"stopAtEntry": true,
+           "logging": {
+                "engineLogging": true,
+                "trace": true,
+                "traceResponse": true
+             }, 
+             "preLaunchTask": "Start Wokwi with Debugger"
+              
+        }              
+    ]
+}

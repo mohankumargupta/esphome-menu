@@ -100,4 +100,20 @@ binary_sensor:
         - tft_menu.keypress:
             key: "*"
 tft_menu:
+  id: mymenu
+  menu:
+   - name: Victoria
+     options:
+       - Melbourne
+       - Geelong
+       - Ballarat
+       - Bendigo
+   - name: New South Wales
+     options:
+       - Sydney
+       - Newcastle
+       - Wollongong
+       - Albury
+
+
 

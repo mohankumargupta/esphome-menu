@@ -1,6 +1,6 @@
 import esphome.codegen as cg
 import esphome.config_validation as cv
-from esphome.const import CONF_ID, CONF_KEY
+from esphome.const import CONF_ID, CONF_KEY, CONF_NAME, CONF_OPTIONS
 from esphome import automation
 
 # from esphome import pins
@@ -9,6 +9,7 @@ tft_menu_ns = cg.esphome_ns.namespace("tft_menu")
 TFTMenuComponent = tft_menu_ns.class_("TFTMenuComponent", cg.Component)
 KeyPressedAction = tft_menu_ns.class_("KeyPressAction", automation.Action)
 
+CONF_MENU = "menu"
 
 # empty_component_ns = cg.esphome_ns.namespace('oled')
 # OledComponent = empty_component_ns.class_("Oled", cg.Component)
@@ -28,9 +29,17 @@ KeyPressedAction = tft_menu_ns.class_("KeyPressAction", automation.Action)
 # INDEXES.add(value)
 # return value
 
+MENU_ITEM_SCHEMA = cv.Schema(
+    {
+        cv.Required(CONF_NAME): cv.string_strict,
+        cv.Optional(CONF_OPTIONS): cv.ensure_list(cv.string_strict)
+    }
+)
+
 CONFIG_SCHEMA = cv.Schema(
     {
         cv.GenerateID(): cv.declare_id(TFTMenuComponent),
+        cv.Required(CONF_MENU): cv.ensure_list()
     }
 )
 
@@ -82,6 +91,9 @@ async def tft_menu_keypress_to_code(config, action_id, template_arg, args):
 
 
 def to_code(config):
+    menu = list(config[CONF_MENU])
+    main_menu = [item['name'] for item in menu]
+    menu_options = [item['options'] for item in menu]
     var = cg.new_Pvariable(config[CONF_ID])
     yield cg.register_component(var, config)
 
