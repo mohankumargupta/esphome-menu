@@ -2,6 +2,7 @@ import esphome.codegen as cg
 import esphome.config_validation as cv
 from esphome.const import CONF_ID, CONF_KEY, CONF_NAME, CONF_OPTIONS
 from esphome import automation
+from esphome.helpers import indent_all_but_first_and_last
 
 # from esphome import pins
 
@@ -95,7 +96,30 @@ def to_code(config):
     main_menu = [item['name'] for item in menu]
     menu_options = [item['options'] for item in menu]
 
+    arraylist = []
+    for options in menu_options:
+        arrayoptions = cg.ArrayInitializer(*options, multiline=True)
+        arraylist.append(arrayoptions)
+
+    class ExpressionList(cg.Expression):
+        __slots__ = ("args",)
+
+        def __init__(self, *args):
+            # Remove every None on end
+            args = list(args)
+            while args and args[-1] is None:
+                args.pop()
+            self.args = [cg.safe_exp(arg) for arg in args]
+
+        def __str__(self):
+            text = ", ".join(str(x) for x in self.args)
+            return indent_all_but_first_and_last(text)
+
+        def __iter__(self):
+            return iter(self.args)
+
     array = cg.ArrayInitializer(*main_menu,multiline=True)
+    
     #vec_string = str(cg.std_vector.template(cg.TemplateArguments(cg.std_string)))
     #expr = cg.RawExpression(f"{vec_string} menu = {array}")
     #statement = str(cg.statement(expr))
@@ -103,6 +127,7 @@ def to_code(config):
     var = cg.new_Pvariable(config[CONF_ID])
     yield cg.register_component(var, config)
     cg.add(var.set_top_menu(array))
+    cg.add(var.set_menu_options(ExpressionList(arraylist)))
 
 
 

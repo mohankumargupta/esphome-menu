@@ -9,6 +9,11 @@ namespace tft_menu {
 
 static const char *const TAG = "tft_menu";
 
+enum class MenuState {
+  MAIN_MENU,
+  SUBMENU
+};
+
 class TFTMenuComponent : public Component {
  public:
   void setup() override;
@@ -22,11 +27,13 @@ class TFTMenuComponent : public Component {
   } 
 
  private:
+  MenuState menu_state_ = MenuState::MAIN_MENU;
   uint8_t index;
   int key;
   std::vector<std::string> top_menu_;
   std::vector<std::vector<std::string>> menu_options_;
 };
+
 
 
 
