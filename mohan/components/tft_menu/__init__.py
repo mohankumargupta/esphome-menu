@@ -119,11 +119,6 @@ def to_code(config):
             return iter(self.args)
 
     array = cg.ArrayInitializer(*main_menu,multiline=True)
-    
-    #vec_string = str(cg.std_vector.template(cg.TemplateArguments(cg.std_string)))
-    #expr = cg.RawExpression(f"{vec_string} menu = {array}")
-    #statement = str(cg.statement(expr))
-
     var = cg.new_Pvariable(config[CONF_ID])
     yield cg.register_component(var, config)
     cg.add(var.set_top_menu(array))

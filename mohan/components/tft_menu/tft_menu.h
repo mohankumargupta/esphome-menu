@@ -23,8 +23,13 @@ class TFTMenuComponent : public Component {
   void set_top_menu(std::vector<std::string> && top_menu);
   void set_menu_options(std::vector<std::vector<std::string>> && menu_options);
   const std::vector<std::string>& get_menu() const {
-    //return top_menu_;
+    if (this->menu_state_ == MenuState::MAIN_MENU) {
+      return top_menu_;
+    }
+
+    //else if (this->menu_state_ == MenuState::SUBMENU) {
     return menu_options_[0];
+    //}
   } 
 
  private:
